@@ -1,0 +1,57 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+
+<% if (messages.error) { %>
+	<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+	<p style="color:green"><%- messages.success %></p>
+<% } %>	
+<h2>Staff Details</h2>
+<div class="table-responsive">
+<table class="table">
+	<thead class="thead-dark">
+		<tr style='text-align:left; background-color:#CCC'>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Phone</th>
+			<th>Designation</th>
+			<th>Department</th>
+			<th>Staff ID</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% if (data) { %>
+	<% data.forEach(function(user){ %>
+		<tr>
+			<td><%= user.name %></td>
+			<td><%= user.email %></td>
+			<td><%= user.phone %></td>
+			<td><%= user.designation %></td>
+			<td><%= user.department %></td>
+			<td><%= user.staffid %></td>
+			<td>
+				<div style="float:left">
+					<a href='/users/edit/<%= user._id %>'><button type="button" class="btn btn-outline-info">Edit</button></a> &nbsp;							
+					<form method="post" action="/users/delete/<%= user._id %>" style="float:right">
+						<input type="submit" name="delete" class="btn btn-outline-danger" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+						<input type="hidden" name="_method" value="DELETE" />
+					</form>
+				</div>
+			</td>
+		</tr>
+	<% }) %>
+	<% } %>
+	</tbody>
+</table>
+</div>
+<!--
+including footer content which is common for all pages
+-->
+<%- include ../layouts/footer.ejs %>
